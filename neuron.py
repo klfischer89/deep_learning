@@ -21,11 +21,11 @@ v = tf.Variable([
 ])
 
 model.compile(
-    optimizer = keras.optimizers.RMSprop(),
+    optimizer = keras.optimizers.RMSprop(0.5),
     loss = keras.losses.MeanSquaredError()
 )
 
-model.fit(X.astype(np.float32), y, batch_size = 1, epochs = 1)
+model.fit(X.astype(np.float32), y, batch_size = 64, epochs = 100)
 
 model.predict(np.array([
     [0.1]
