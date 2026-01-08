@@ -7,7 +7,7 @@ import tensorflow as tf
 import keras
 from keras import layers
 
-
+# Code aufbauend auf: https://stackoverflow.com/a/62781370
 def load_images(path):
     with gzip.open(path, 'r') as f:
         # first 4 bytes is a magic number
