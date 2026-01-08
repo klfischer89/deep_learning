@@ -3,6 +3,10 @@ import pandas as pd
 import seaborn as sns
 import gzip
 import numpy as np
+import tensorflow as tf
+import keras
+from keras import layers
+
 
 def load_images(path):
     with gzip.open(path, 'r') as f:
@@ -38,3 +42,21 @@ y_train = load_labels("./data/MNIST/train-labels-idx1-ubyte.gz")
 
 X_test = load_images("./data/MNIST/t10k-images-idx3-ubyte.gz")
 y_test = load_labels("./data/MNIST/t10k-labels-idx1-ubyte.gz")
+
+X_train = X_train.reshape(-1, 784)
+X_test = X_test.reshape(-1, 784)
+
+model = keras.Sequential([
+    keras.Input(shape = (784,)),
+    layers.Dense(1024, activation = "relu"),
+    layers.Dense(1, activation = "sigmoid")
+])
+
+print(model.summary())
+
+model.compile(
+    optimizer = keras.optimizers.RMSprop(),
+    loss = keras.losses.BinaryCrossentropy()
+)
+
+model.fit(X_train.astype(np.float32), y_train, batch_size = 64, epochs = 50)
