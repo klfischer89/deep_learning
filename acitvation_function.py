@@ -2,7 +2,7 @@ import numpy as np
 import pandas as pd
 import seaborn as sns
 import tensorflow as tf
-from tensorflow import keras
+import keras
 from keras import layers
 
 df = pd.read_csv("./data/diabetes.csv")
