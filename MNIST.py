@@ -6,6 +6,7 @@ import numpy as np
 import tensorflow as tf
 import keras
 from keras import layers
+from keras.utils import to_categorical
 
 # Code aufbauend auf: https://stackoverflow.com/a/62781370
 def load_images(path):
@@ -46,13 +47,12 @@ y_test = load_labels("./data/MNIST/t10k-labels-idx1-ubyte.gz")
 X_train = X_train.reshape(-1, 784)
 X_test = X_test.reshape(-1, 784)
 
-y_train = y_train == 5
-y_test = y_test == 5
+y_train = to_categorical(y_train)
 
 model = keras.Sequential([
     keras.Input(shape = (784,)),
     layers.Dense(1024, activation = "relu"),
-    layers.Dense(1, activation = "sigmoid")
+    layers.Dense(10, activation = "sigmoid")
 ])
 
 print(model.summary())
@@ -64,4 +64,6 @@ model.compile(
 
 model.fit(X_train.astype(np.float32), y_train, batch_size = 64, epochs = 50)
 
-np.mean((model.predict(X_test.astype(np.float32)) > 0.5) == y_test)
+y_test_pred = model.predict(X_test.astype(np.float32))
+
+print(np.mean(np.argmax(y_test_pred, axis = 1) == y_test))
