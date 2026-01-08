@@ -47,6 +47,9 @@ y_test = load_labels("./data/MNIST/t10k-labels-idx1-ubyte.gz")
 X_train = X_train.reshape(-1, 28, 28, 1)
 X_test = X_test.reshape(-1, 28, 28, 1)
 
+X_train = X_train.astype(np.float32) / 255
+X_test = X_test.astype(np.float32) / 255
+
 y_train = to_categorical(y_train)
 
 model = keras.Sequential([
@@ -61,11 +64,17 @@ print(model.summary())
 
 model.compile(
     optimizer = keras.optimizers.RMSprop(),
-    loss = keras.losses.CategoricalCrossentropy()
+    loss = keras.losses.CategoricalCrossentropy(),
+    metrics = [
+        keras.metrics.CategoricalAccuracy()
+    ]
 )
 
-model.fit(X_train.astype(np.float32), y_train, batch_size = 64, epochs = 10)
+model.fit(X_train, y_train, 
+          batch_size = 64, 
+          epochs = 10, 
+          validation_split = 0.1)
 
-y_test_pred = model.predict(X_test.astype(np.float32))
+y_test_pred = model.predict(X_test)
 
 print(np.mean(np.argmax(y_test_pred, axis = 1) == y_test))
