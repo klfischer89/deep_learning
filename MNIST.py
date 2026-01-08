@@ -46,6 +46,9 @@ y_test = load_labels("./data/MNIST/t10k-labels-idx1-ubyte.gz")
 X_train = X_train.reshape(-1, 784)
 X_test = X_test.reshape(-1, 784)
 
+y_train = y_train == 5
+y_test = y_test == 5
+
 model = keras.Sequential([
     keras.Input(shape = (784,)),
     layers.Dense(1024, activation = "relu"),
@@ -60,3 +63,5 @@ model.compile(
 )
 
 model.fit(X_train.astype(np.float32), y_train, batch_size = 64, epochs = 50)
+
+np.mean((model.predict(X_test.astype(np.float32)) > 0.5) == y_test)
