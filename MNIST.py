@@ -52,14 +52,14 @@ y_train = to_categorical(y_train)
 model = keras.Sequential([
     keras.Input(shape = (784,)),
     layers.Dense(1024, activation = "relu"),
-    layers.Dense(10, activation = "sigmoid")
+    layers.Dense(10, activation = "softmax")
 ])
 
 print(model.summary())
 
 model.compile(
     optimizer = keras.optimizers.RMSprop(),
-    loss = keras.losses.BinaryCrossentropy()
+    loss = keras.losses.CategoricalCrossentropy()
 )
 
 model.fit(X_train.astype(np.float32), y_train, batch_size = 64, epochs = 50)
