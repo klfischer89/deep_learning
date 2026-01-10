@@ -54,7 +54,8 @@ y_train = to_categorical(y_train)
 
 model = keras.Sequential([
     keras.Input(shape = (28, 28, 1)),
-    layers.Conv2D(10, kernel_size = (3, 3), activation = "relu"),
+    layers.Conv2D(10, kernel_size = (3, 3), padding = "same", activation = "relu"),
+    layers.Conv2D(10, kernel_size = (3, 3), padding = "same", activation = "relu"),
     layers.Flatten(),
     layers.Dense(100, activation = "relu"),
     layers.Dense(10, activation = "softmax")
