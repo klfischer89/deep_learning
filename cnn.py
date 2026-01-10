@@ -81,3 +81,5 @@ model.fit(X_train, y_train,
 y_test_pred = model.predict(X_test)
 
 print(np.mean(np.argmax(y_test_pred, axis = 1) == y_test))
+
+model.save("model.tf")
