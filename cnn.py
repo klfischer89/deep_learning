@@ -75,7 +75,7 @@ model.compile(
 
 model.fit(X_train, y_train, 
           batch_size = 64, 
-          epochs = 10, 
+          epochs = 20, 
           validation_split = 0.1)
 
 y_test_pred = model.predict(X_test)
