@@ -71,7 +71,13 @@ model.compile(
     ]
 )
 
+mcp = keras.callbacks.ModelCheckpoint("./checkpoints/{epoch:04d}", verbose = 1)
+
 model.fit(X_train, y_train, 
           batch_size = 64, 
           epochs = 20, 
-          validation_split = 0.1)
+          validation_split = 0.1,
+          callbacks = [mcp])
+
+m = keras.models.load_model("./checkpoints/0003")
+m.summary()
